@@ -1,0 +1,92 @@
+[tool.poetry]
+authors = ["Chris Gregory <christopher.b.gregory@gmail.com>"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Topic :: Software Development",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+]
+description = "Dynamic survey generator"
+keywords = []
+license = "Apache Software License"
+name = "surv"
+readme = "README.md"
+repository = "https://github.com/gregorybchris/surv"
+version = "0.1.0"
+
+[[tool.poetry.packages]]
+include = "surv"
+
+[tool.poetry.dependencies]
+click = "^8.1.7"
+python = ">=3.12"
+rich = "^13.7.1"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.11.1"
+pytest = "^8.3.2"
+ruff = "^0.5.7"
+semver = "^3.0.2"
+
+[tool.poetry.scripts]
+surv = "surv.cli:main"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.mypy]
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+src = ["surv"]
+
+[tool.ruff.lint]
+ignore = ["D100", "D104", "FIX002", "TD002", "TD003"]
+select = [
+    "A",
+    "ARG",
+    "B",
+    "BLE",
+    "C4",
+    "D",
+    "E",
+    "EM",
+    "ERA",
+    "F",
+    "FIX",
+    "G",
+    "I",
+    "ICN",
+    "ISC",
+    "LOG",
+    "N",
+    "PL",
+    "PT",
+    "PTH",
+    "PLR",
+    "RET",
+    "RUF",
+    "SIM",
+    "SLF",
+    "T20",
+    "TCH",
+    "TD",
+    "TID",
+    "W",
+]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.extend-per-file-ignores]
+"**/__init__.py" = ["D"]
+"**/tests/**/*.py" = ["D", "SLF", "PLR2004", "PLR6301"]
+"surv/cli.py" = ["T201", "T203"]
