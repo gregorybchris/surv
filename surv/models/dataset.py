@@ -12,23 +12,22 @@ from surv.models.question import Question
 class Dataset:
     """Survey dataset."""
 
-    dataframe: pd.DataFrame
     questions: list[Question]
+    responses: pd.DataFrame
 
     @classmethod
-    def load(cls, data_dirpath: Path) -> "Dataset":
+    def from_files(cls, questions_filepath: Path, responses_filepath: Path) -> "Dataset":
         """Load the dataset from the data directory.
 
         Args:
-            data_dirpath (Path): Data directory path.
+            questions_filepath (Path): Path to the questions JSON file.
+            responses_filepath (Path): Path to the responses CSV file.
         """
-        dataset_filepath = data_dirpath / "dataset.csv"
-        dataframe = pd.read_csv(dataset_filepath)
-
-        questions_filepath = data_dirpath / "questions.json"
         with questions_filepath.open("r") as file:
             questions_json = json.load(file)
             type_adapter = TypeAdapter(list[Question])
             questions = type_adapter.validate_python(questions_json)
 
-        return cls(dataframe, questions)
+        responses = pd.read_csv(responses_filepath)
+
+        return cls(questions, responses)

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-import numpy as np
+from surv.models.dataset import Dataset
 
 
 @dataclass
@@ -10,19 +10,18 @@ class Id3:
     max_depth: int = 3
     min_leaf_size: int = 1
 
-    def fit(self, x_data: np.ndarray, y_data: np.ndarray) -> None:
+    def fit(self, dataset: Dataset) -> None:
         """Fit the model to the data.
 
         Args:
-            x_data (np.ndarray): Features.
-            y_data (np.ndarray): Target variable.
+            dataset (Dataset): Dataset to fit the model to.
         """
-        pass
+        raise NotImplementedError
 
-    def predict(self, x_data: np.ndarray) -> np.ndarray:
+    def predict(self, dataset: Dataset) -> Dataset:
         """Predict the target variable.
 
         Returns:
-            np.ndarray: Predicted target variable.
+            Dataset: Dataset with the predicted target variable.
         """
-        return np.array([])
+        raise NotImplementedError

@@ -1,6 +1,7 @@
 import logging
 
 import click
+from rich.pretty import pprint
 
 from surv.models.dataset import Dataset
 from surv.settings import Settings
@@ -31,8 +32,10 @@ def run_command(
 
     settings = Settings()
 
-    dataset = Dataset.load(settings.data_dirpath)
-    print(dataset)
+    responses_filepath = settings.data_dirpath / "responses.csv"
+    questions_filepath = settings.data_dirpath / "questions.json"
+    dataset = Dataset.from_files(questions_filepath, responses_filepath)
+    pprint(dataset)
 
 
 if __name__ == "__main__":
