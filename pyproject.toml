@@ -7,7 +7,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 description = "Dynamic survey generator"
-keywords = []
+keywords = ["survey", "decision", "tree", "dynamic"]
 license = "Apache Software License"
 name = "surv"
 readme = "README.md"
@@ -19,15 +19,15 @@ include = "surv"
 
 [tool.poetry.dependencies]
 click = "^8.1.7"
-python = ">=3.12"
-rich = "^13.7.1"
 numpy = "^2.1.0"
 pandas = "^2.2.2"
 pydantic = "^2.8.2"
 pydantic-settings = "^2.4.0"
+python = ">=3.12"
+rich = "^13.7.1"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.11.1"
+mypy = "^1.11.2"
 pytest = "^8.3.2"
 ruff = "^0.6.2"
 semver = "^3.0.2"
