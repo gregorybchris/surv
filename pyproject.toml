@@ -23,6 +23,8 @@ python = ">=3.12"
 rich = "^13.7.1"
 numpy = "^2.1.0"
 pandas = "^2.2.2"
+pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.11.1"
@@ -42,6 +44,7 @@ disallow_incomplete_defs = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
 ignore_missing_imports = true
+plugins = ["pydantic.mypy"]
 
 [tool.ruff]
 line-length = 120

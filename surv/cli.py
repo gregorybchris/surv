@@ -1,6 +1,13 @@
+import json
 import logging
 
 import click
+from pydantic import TypeAdapter
+from rich.pretty import pprint
+
+from surv.models.question import Question
+from surv.settings import Settings
+
 
 @click.group()
 def main() -> None:
@@ -25,5 +32,10 @@ def run_command(
     """Run the CLI."""
     set_logger_config(info, debug)
 
-    print("Surv")
-
+    settings = Settings()
+    questions_filepath = settings.data_dirpath / "questions.json"
+    with questions_filepath.open("r") as file:
+        questions_json = json.load(file)
+        type_adapter = TypeAdapter(list[Question])
+        questions = type_adapter.validate_python(questions_json)
+        pprint(questions)
