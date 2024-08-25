@@ -33,7 +33,7 @@ class Categorical(BaseModel):
     """
 
     type: Literal["categorical"]
-    metadata: Union[Binary, Multiclass]
+    metadata: Union[Binary, Multiclass] = Field(..., discriminator="type")
     classes: list[str]
     positive_class: Optional[str] = None
 
@@ -76,7 +76,7 @@ class Numeric(BaseModel):
         metadata (Union[Ordinal, Interval, Ratio]): Numeric variable metadata.
     """
 
-    metadata: Union[Ordinal, Interval, Ratio]
+    metadata: Union[Ordinal, Interval, Ratio] = Field(..., discriminator="type")
     type: Literal["numeric"]
 
 
