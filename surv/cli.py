@@ -32,9 +32,9 @@ def run_command(
 
     settings = Settings()
 
-    responses_filepath = settings.data_dirpath / "responses.csv"
-    questions_filepath = settings.data_dirpath / "questions.json"
-    dataset = Dataset.from_files(questions_filepath, responses_filepath)
+    tabular_filepath = settings.data_dirpath / "tabular.csv"
+    metadata_filepath = settings.data_dirpath / "metadata.json"
+    dataset = Dataset.from_files(tabular_filepath, metadata_filepath)
     pprint(dataset)
 
 

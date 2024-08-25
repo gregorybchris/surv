@@ -2,32 +2,58 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
-from pydantic import TypeAdapter
 
-from surv.models.question import Question
+from surv.models.dataset_metadata import DatasetMetadata
+from surv.models.feature import Feature
 
 
 @dataclass
 class Dataset:
     """Survey dataset."""
 
-    questions: list[Question]
-    responses: pd.DataFrame
+    tabular: pd.DataFrame
+    metadata: DatasetMetadata
 
     @classmethod
-    def from_files(cls, questions_filepath: Path, responses_filepath: Path) -> "Dataset":
+    def from_files(cls, tabular_filepath: Path, metadata_filepath: Path) -> "Dataset":
         """Load the dataset from the data directory.
 
         Args:
-            questions_filepath (Path): Path to the questions JSON file.
-            responses_filepath (Path): Path to the responses CSV file.
+            tabular_filepath (Path): Path tabular dataset CSV file.
+            metadata_filepath (Path): Path to metadata JSON file.
         """
-        with questions_filepath.open("r") as file:
-            questions_json = json.load(file)
-            type_adapter = TypeAdapter(list[Question])
-            questions = type_adapter.validate_python(questions_json)
+        tabular = pd.read_csv(tabular_filepath)
 
-        responses = pd.read_csv(responses_filepath)
+        with metadata_filepath.open("r") as file:
+            metadata_json = json.load(file)
+            metadata = DatasetMetadata(**metadata_json)
 
-        return cls(questions, responses)
+        return cls(tabular, metadata)
+
+    def get_column(self, feature_name: str) -> np.ndarray:
+        """Get a column from the dataset.
+
+        Args:
+            feature_name (str): Name of the feature.
+
+        Returns:
+            np.ndarray: Feature data.
+        """
+        return self.tabular[feature_name].values
+
+    def get_feature(self, feature_name: str) -> Feature:
+        """Get a feature from the dataset.
+
+        Args:
+            feature_name (str): Name of the feature.
+
+        Returns:
+            Feature: The feature for the given name.
+        """
+        for question in self.metadata.questions:
+            if question.feature.name == feature_name:
+                return question.feature
+        msg = f"Feature '{feature_name}' not found in dataset metadata."
+        raise ValueError(msg)

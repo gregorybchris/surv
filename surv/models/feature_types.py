@@ -1,4 +1,4 @@
-from typing import Literal, Optional, Union
+from typing import Literal, Union
 
 from pydantic import BaseModel, Field
 
@@ -11,6 +11,7 @@ class Binary(BaseModel):
     """
 
     type: Literal["binary"]
+    positive_class: str
 
 
 class Multiclass(BaseModel):
@@ -35,7 +36,6 @@ class Categorical(BaseModel):
     type: Literal["categorical"]
     metadata: Union[Binary, Multiclass] = Field(..., discriminator="type")
     classes: list[str]
-    positive_class: Optional[str] = None
 
 
 class Ordinal(BaseModel):
@@ -100,11 +100,11 @@ class Text(BaseModel):
     type: Literal["text"]
 
 
-class ResponseType(BaseModel):
-    """Survey response type model.
+class FeatureType(BaseModel):
+    """Feature type model.
 
     Attributes:
-        data (Union[Categorical, Numeric, Datetime, Text]): Response type metadata.
+        data (Union[Categorical, Numeric, Datetime, Text]): Feature type metadata.
     """
 
     metadata: Union[Categorical, Numeric, Datetime, Text] = Field(..., discriminator="type")

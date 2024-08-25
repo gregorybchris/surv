@@ -1,0 +1,42 @@
+{
+  "questions": [
+    {
+      "text": "What is your gender?",
+      "feature": {
+        "name": "gender",
+        "feature_type": {
+          "metadata": {
+            "type": "categorical",
+            "classes": ["male", "female"],
+            "metadata": { "type": "multiclass" }
+          }
+        }
+      }
+    },
+    {
+      "text": "How old are you?",
+      "feature": {
+        "name": "age",
+        "feature_type": {
+          "metadata": {
+            "type": "numeric",
+            "metadata": { "type": "ratio" }
+          }
+        }
+      }
+    },
+    {
+      "text": "What latitude do you live at?",
+      "feature": {
+        "name": "latitude",
+        "feature_type": {
+          "metadata": {
+            "type": "numeric",
+            "metadata": { "type": "interval" }
+          }
+        }
+      }
+    }
+  ],
+  "target_feature_name": "latitude"
+}

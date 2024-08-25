@@ -1,17 +1,19 @@
 from pydantic import BaseModel
 
-from surv.models.response_type import ResponseType
+from surv.models.feature import Feature
 
 
 class Question(BaseModel):
     """Survey question model.
 
     Attributes:
-        slug (str): Question slub.
-        response_type (ResponseType): Response type.
         text (str): Question text.
+        feature (Feature): Question feature.
     """
 
-    slug: str
-    response_type: ResponseType
     text: str
+    feature: Feature
+
+    def __repr__(self) -> str:
+        """Return the string representation of the question."""
+        return f"Question({self.feature.name})"
