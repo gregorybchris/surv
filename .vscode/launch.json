@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "name": "Surv CLI",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "surv/cli.py",
+      "console": "integratedTerminal",
+      "args": "run"
+    }
+  ]
+}

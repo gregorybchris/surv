@@ -1,11 +1,8 @@
-import json
 import logging
 
 import click
-from pydantic import TypeAdapter
-from rich.pretty import pprint
 
-from surv.models.question import Question
+from surv.models.dataset import Dataset
 from surv.settings import Settings
 
 
@@ -33,9 +30,10 @@ def run_command(
     set_logger_config(info, debug)
 
     settings = Settings()
-    questions_filepath = settings.data_dirpath / "questions.json"
-    with questions_filepath.open("r") as file:
-        questions_json = json.load(file)
-        type_adapter = TypeAdapter(list[Question])
-        questions = type_adapter.validate_python(questions_json)
-        pprint(questions)
+
+    dataset = Dataset.load(settings.data_dirpath)
+    print(dataset)
+
+
+if __name__ == "__main__":
+    main()
