@@ -4,12 +4,10 @@
       "text": "does the house have a garage?",
       "feature": {
         "name": "garage",
-        "feature_type": {
-          "metadata": {
-            "type": "categorical",
-            "classes": ["yes", "no"],
-            "metadata": { "type": "binary", "positive_class": "yes" }
-          }
+        "type": {
+          "name": "categorical",
+          "classes": ["yes", "no"],
+          "type": { "name": "binary", "positive_class": "yes" }
         }
       }
     },
@@ -17,12 +15,10 @@
       "text": "is the house moldy?",
       "feature": {
         "name": "moldy",
-        "feature_type": {
-          "metadata": {
-            "type": "categorical",
-            "classes": ["no", "slightly", "very"],
-            "metadata": { "type": "multiclass" }
-          }
+        "type": {
+          "name": "categorical",
+          "classes": ["no", "slightly", "very"],
+          "type": { "name": "multiclass" }
         }
       }
     },
@@ -30,12 +26,10 @@
       "text": "how big is the house's yard?",
       "feature": {
         "name": "yard_size",
-        "feature_type": {
-          "metadata": {
-            "type": "categorical",
-            "classes": ["none", "small", "big"],
-            "metadata": { "type": "multiclass" }
-          }
+        "type": {
+          "name": "categorical",
+          "classes": ["none", "small", "big"],
+          "type": { "name": "multiclass" }
         }
       }
     },
@@ -43,12 +37,10 @@
       "text": "what's the price of the house?",
       "feature": {
         "name": "price",
-        "feature_type": {
-          "metadata": {
-            "type": "categorical",
-            "classes": ["cheap", "expensive"],
-            "metadata": { "type": "multiclass" }
-          }
+        "type": {
+          "name": "categorical",
+          "classes": ["cheap", "expensive"],
+          "type": { "name": "multiclass" }
         }
       }
     }

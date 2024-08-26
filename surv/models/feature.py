@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from surv.models.feature_types import FeatureType
 
@@ -12,7 +12,7 @@ class Feature(BaseModel):
     """
 
     name: str
-    feature_type: FeatureType
+    type: FeatureType = Field(..., discriminator="name")
 
     def __repr__(self) -> str:
         """Return the string representation of the feature."""

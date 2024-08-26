@@ -7,10 +7,11 @@ class Binary(BaseModel):
     """Binary categorical variable.
 
     Attributes:
-        type (Literal["binary"]): Discriminator field.
+        name (Literal["binary"]): Feature type discriminator field.
+        positive_class (str): Positive class name.
     """
 
-    type: Literal["binary"]
+    name: Literal["binary"]
     positive_class: str
 
 
@@ -18,23 +19,26 @@ class Multiclass(BaseModel):
     """Multiclass categorical variable.
 
     Attributes:
-        type (Literal["multiclass"]): Discriminator field.
+        name (Literal["multiclass"]): Feature type discriminator field.
     """
 
-    type: Literal["multiclass"]
+    name: Literal["multiclass"]
+
+
+CategoricalFeatureTypes = Union[Binary, Multiclass]
 
 
 class Categorical(BaseModel):
     """Categorical variable.
 
     Attributes:
-        type (Literal["categorical"]): Discriminator field.
-        metadata (Union[Binary, Multiclass]): Categorical variable metadata.
-        positive_class (Optional[str]): Positive class.
+        name (Literal["categorical"]): Feature type discriminator field.
+        type (Union[Binary, Multiclass]): Categorical variable subtype.
+        classes (Optional[str]): List of classes.
     """
 
-    type: Literal["categorical"]
-    metadata: Union[Binary, Multiclass] = Field(..., discriminator="type")
+    name: Literal["categorical"]
+    type: CategoricalFeatureTypes = Field(..., discriminator="name")
     classes: list[str]
 
 
@@ -42,69 +46,65 @@ class Ordinal(BaseModel):
     """Ordinal numeric variable.
 
     Attributes:
-        type (Literal["ordinal"]): Discriminator field.
+        name (Literal["ordinal"]): Feature type discriminator field.
     """
 
-    type: Literal["ordinal"]
+    name: Literal["ordinal"]
 
 
 class Interval(BaseModel):
     """Interval numeric variable.
 
     Attributes:
-        type (Literal["interval"]): Discriminator field.
+        name (Literal["interval"]): Feature type discriminator field.
     """
 
-    type: Literal["interval"]
+    name: Literal["interval"]
 
 
 class Ratio(BaseModel):
     """Ratio numeric variable.
 
     Attributes:
-        type (Literal["ratio"]): Discriminator field.
+        name (Literal["ratio"]): Feature type discriminator field.
     """
 
-    type: Literal["ratio"]
+    name: Literal["ratio"]
+
+
+NumericFeatureTypes = Union[Ordinal, Interval, Ratio]
 
 
 class Numeric(BaseModel):
     """Numeric variable.
 
     Attributes:
-        type (Literal["numeric"]): Discriminator field.
-        metadata (Union[Ordinal, Interval, Ratio]): Numeric variable metadata.
+        name (Literal["numeric"]): Feature type discriminator field.
+        type (Union[Ordinal, Interval, Ratio]): Numeric variable subtype.
     """
 
-    metadata: Union[Ordinal, Interval, Ratio] = Field(..., discriminator="type")
-    type: Literal["numeric"]
+    name: Literal["numeric"]
+    type: NumericFeatureTypes = Field(..., discriminator="name")
 
 
 class Datetime(BaseModel):
     """Datetime variable.
 
     Attributes:
-        type (Literal["datetime"]): Discriminator field.
+        name (Literal["datetime"]): Feature type discriminator field.
     """
 
-    type: Literal["datetime"]
+    name: Literal["datetime"]
 
 
 class Text(BaseModel):
     """Text variable.
 
     Attributes:
-        type (Literal["text"]): Discriminator field.
+        name (Literal["text"]): Feature type discriminator field.
     """
 
-    type: Literal["text"]
+    name: Literal["text"]
 
 
-class FeatureType(BaseModel):
-    """Feature type model.
-
-    Attributes:
-        data (Union[Categorical, Numeric, Datetime, Text]): Feature type metadata.
-    """
-
-    metadata: Union[Categorical, Numeric, Datetime, Text] = Field(..., discriminator="type")
+FeatureType = Union[Categorical, Numeric, Datetime, Text]

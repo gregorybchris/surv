@@ -3,20 +3,22 @@ from dataclasses import dataclass
 import numpy as np
 from rich.pretty import pprint
 
+from surv.algo.constraints import Constraint
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
-from surv.models.feature_types import Categorical, Datetime, Numeric, Text
+from surv.models.feature_types import Categorical, Datetime, FeatureType, Numeric, Text
 
 
 @dataclass
 class Evaluator:
     """Feature evaluator."""
 
-    def evaluate(self, dataset: Dataset) -> None:
+    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> None:
         """Evaluate a dataset for the optimal feature data to collect.
 
         Args:
             dataset (Dataset): Dataset to evaluate.
+            constraints (list[Constraint]): Known constraints.
         """
         metadata = dataset.metadata
         questions = metadata.questions
@@ -32,8 +34,8 @@ class Evaluator:
 
         pprint(information_gain_map)
 
-    def _compute_entropy(self, feature: Feature, column: np.ndarray) -> float:
-        match feature.feature_type.metadata:
+    def _compute_entropy(self, column: np.ndarray, feature_type: FeatureType) -> float:
+        match feature_type:
             case Categorical():
                 return self._compute_entropy_categorical(column)
             case Numeric():
@@ -44,14 +46,14 @@ class Evaluator:
                 raise NotImplementedError
 
     def _compute_entropy_categorical(self, column: np.ndarray) -> float:  # noqa: PLR6301
-        entropy = 0.0
-        for target in np.unique(column):
-            proportion = np.sum(column == target) / column.shape[0]
-            entropy -= proportion * np.log2(proportion)
-        return float(entropy)
+        h = 0.0
+        for x in np.unique(column):
+            p_x = np.sum(column == x) / column.shape[0]
+            h -= p_x * np.log2(p_x)
+        return float(h)
 
     def _compute_information_gain(self, dataset: Dataset, feature: Feature) -> float:
-        match feature.feature_type.metadata:
+        match feature.type:
             case Categorical():
                 return self._compute_information_gain_categorical(dataset, feature)
             case Numeric():
@@ -64,13 +66,13 @@ class Evaluator:
     def _compute_information_gain_categorical(self, dataset: Dataset, feature: Feature) -> float:
         target_feature = dataset.get_feature(dataset.metadata.target_feature_name)
         target_column = dataset.get_column(dataset.metadata.target_feature_name)
-        entropy_initial = self._compute_entropy(target_feature, target_column)
+        entropy_initial = self._compute_entropy(target_column, target_feature.type)
 
         information_gain = entropy_initial
         question_column = dataset.get_column(feature.name)
         for category in np.unique(question_column):
             target_subset = target_column[question_column == category]
-            subset_entropy = self._compute_entropy(target_feature, target_subset)
+            subset_entropy = self._compute_entropy(target_subset, target_feature.type)
             proportion = target_subset.shape[0] / target_column.shape[0]
             information_gain -= proportion * subset_entropy
 
