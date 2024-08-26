@@ -1,28 +1,22 @@
 from dataclasses import dataclass
-from typing import Optional
 
 import numpy as np
 from rich.pretty import pprint
 
-from surv.algo.node import Node
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
 from surv.models.feature_types import Categorical, Datetime, Numeric, Text
 
 
 @dataclass
-class Id3:
-    """ID3 Decision Tree Algorithm."""
+class Evaluator:
+    """Feature evaluator."""
 
-    max_depth: int = 3
-    min_leaf_size: int = 1
-    _node: Optional[Node] = None
-
-    def fit(self, dataset: Dataset) -> None:
-        """Fit the model to the data.
+    def evaluate(self, dataset: Dataset) -> None:
+        """Evaluate a dataset for the optimal feature data to collect.
 
         Args:
-            dataset (Dataset): Dataset to fit the model to.
+            dataset (Dataset): Dataset to evaluate.
         """
         metadata = dataset.metadata
         questions = metadata.questions
@@ -81,11 +75,3 @@ class Id3:
             information_gain -= proportion * subset_entropy
 
         return information_gain
-
-    def predict(self, dataset: Dataset) -> Dataset:
-        """Predict the target variable.
-
-        Returns:
-            Dataset: Dataset with the predicted target variable.
-        """
-        raise NotImplementedError

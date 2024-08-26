@@ -9,3 +9,7 @@ G,yes,slightly,big,expensive
 H,yes,no,none,cheap
 I,no,slightly,none,cheap
 J,yes,very,small,cheap
+K,no,very,small,cheap
+L,yes,no,big,expensive
+M,no,slightly,small,cheap
+N,yes,no,small,expensive
