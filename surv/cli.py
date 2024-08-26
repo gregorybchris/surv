@@ -3,7 +3,7 @@ import logging
 import click
 from rich.pretty import pprint
 
-from surv.algo.constraints import Constraint
+from surv.algo.constraints import Constraint, EqConstraint
 from surv.algo.evaluator import Evaluator
 from surv.models.dataset import Dataset
 from surv.settings import Settings
@@ -41,8 +41,17 @@ def run_command(
 
     evaluator = Evaluator()
     constraints: list[Constraint] = []
-    feature = evaluator.evaluate(dataset, constraints)
-    pprint(feature)
+    while len(constraints) < dataset.n_features:
+        result = evaluator.evaluate(dataset, constraints)
+        feature = result.feature
+        information_gain = result.information_gain
+        if information_gain == settings.information_gain_threshold:
+            print("Information gain threshold reached.")
+            break
+        constraint = EqConstraint(feature=feature, value="0")
+        print("Feature with highest information gain: ")
+        pprint(feature)
+        constraints.append(constraint)
 
 
 if __name__ == "__main__":

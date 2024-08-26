@@ -57,3 +57,8 @@ class Dataset:
                 return question.feature
         msg = f"Feature '{feature_name}' not found in dataset metadata."
         raise ValueError(msg)
+
+    @property
+    def n_features(self) -> int:
+        """Number of features in the dataset."""
+        return len(self.metadata.questions)

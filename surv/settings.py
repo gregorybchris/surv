@@ -12,3 +12,4 @@ class Settings(BaseSettings):
     """
 
     data_dirpath: Path = Field(alias="surv_data_dirpath")
+    information_gain_threshold: float = 0.05

@@ -1,3 +1,4 @@
+import logging
 from dataclasses import dataclass
 
 import numpy as np
@@ -7,12 +8,22 @@ from surv.models.dataset import Dataset
 from surv.models.feature import Feature
 from surv.models.feature_types import Categorical, Datetime, FeatureType, Numeric, Text
 
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class EvaluationResult:
+    """Evaluation result."""
+
+    feature: Feature
+    information_gain: float
+
 
 @dataclass
 class Evaluator:
     """Feature evaluator."""
 
-    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> Feature:
+    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> EvaluationResult:
         """Evaluate a dataset for the optimal feature data to collect.
 
         Args:
@@ -34,12 +45,17 @@ class Evaluator:
         max_information_gain = 0.0
         best_feature_name = None
         for feature_name, information_gain in information_gain_map.items():
-            print(f"Feature: {feature_name}, Information Gain: {information_gain}")
+            logger.info(f"Feature: {feature_name}, Information Gain: {information_gain}")
             if information_gain > max_information_gain:
                 max_information_gain = information_gain
                 best_feature_name = feature_name
 
-        return dataset.get_feature(best_feature_name)
+        if best_feature_name is None:
+            msg = "No best feature found."
+            raise ValueError(msg)
+
+        best_feature = dataset.get_feature(best_feature_name)
+        return EvaluationResult(feature=best_feature, information_gain=max_information_gain)
 
     def _compute_entropy(self, column: np.ndarray, feature_type: FeatureType) -> float:
         match feature_type:
