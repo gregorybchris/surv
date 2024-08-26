@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 import numpy as np
-from rich.pretty import pprint
 
 from surv.algo.constraints import Constraint
 from surv.models.dataset import Dataset
@@ -13,7 +12,7 @@ from surv.models.feature_types import Categorical, Datetime, FeatureType, Numeri
 class Evaluator:
     """Feature evaluator."""
 
-    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> None:
+    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> Feature:
         """Evaluate a dataset for the optimal feature data to collect.
 
         Args:
@@ -32,7 +31,15 @@ class Evaluator:
             information_gain = self._compute_information_gain(dataset, question_feature)
             information_gain_map[question_feature.name] = information_gain
 
-        pprint(information_gain_map)
+        max_information_gain = 0.0
+        best_feature_name = None
+        for feature_name, information_gain in information_gain_map.items():
+            print(f"Feature: {feature_name}, Information Gain: {information_gain}")
+            if information_gain > max_information_gain:
+                max_information_gain = information_gain
+                best_feature_name = feature_name
+
+        return dataset.get_feature(best_feature_name)
 
     def _compute_entropy(self, column: np.ndarray, feature_type: FeatureType) -> float:
         match feature_type:

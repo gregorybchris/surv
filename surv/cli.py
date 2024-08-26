@@ -3,6 +3,8 @@ import logging
 import click
 from rich.pretty import pprint
 
+from surv.algo.constraints import Constraint
+from surv.algo.evaluator import Evaluator
 from surv.models.dataset import Dataset
 from surv.settings import Settings
 
@@ -36,6 +38,11 @@ def run_command(
     metadata_filepath = settings.data_dirpath / "metadata.json"
     dataset = Dataset.from_files(tabular_filepath, metadata_filepath)
     pprint(dataset)
+
+    evaluator = Evaluator()
+    constraints: list[Constraint] = []
+    feature = evaluator.evaluate(dataset, constraints)
+    pprint(feature)
 
 
 if __name__ == "__main__":
