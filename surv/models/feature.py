@@ -1,5 +1,9 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
+from surv.models.feature_attributes import FeatureAttributes
+from surv.models.feature_metadata import FeatureMetadata
 from surv.models.feature_types import FeatureType
 
 
@@ -13,6 +17,8 @@ class Feature(BaseModel):
 
     name: str
     type: FeatureType = Field(..., discriminator="name")
+    attributes: FeatureAttributes = FeatureAttributes()
+    metadata: Optional[FeatureMetadata] = None
 
     def __repr__(self) -> str:
         """Return the string representation of the feature."""

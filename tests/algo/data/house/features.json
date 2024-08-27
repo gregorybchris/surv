@@ -1,0 +1,58 @@
+{
+  "features": [
+    {
+      "name": "address",
+      "type": {
+        "name": "text"
+      },
+      "attributes": {
+        "identifier": true
+      }
+    },
+    {
+      "name": "garage",
+      "type": {
+        "name": "categorical",
+        "classes": ["yes", "no"],
+        "type": { "name": "binary", "positive_class": "yes" }
+      },
+      "metadata": {
+        "question": "does the house have a garage?"
+      }
+    },
+    {
+      "name": "moldy",
+      "type": {
+        "name": "categorical",
+        "classes": ["no", "slightly", "very"],
+        "type": { "name": "multiclass" }
+      },
+      "metadata": {
+        "question": "is the house moldy?"
+      }
+    },
+    {
+      "name": "yard_size",
+      "type": {
+        "name": "categorical",
+        "classes": ["none", "small", "big"],
+        "type": { "name": "multiclass" }
+      },
+      "metadata": {
+        "question": "how big is the house's yard?"
+      }
+    },
+    {
+      "name": "price",
+      "type": {
+        "name": "categorical",
+        "classes": ["cheap", "expensive"],
+        "type": { "name": "multiclass" }
+      },
+      "metadata": {
+        "question": "what's the price of the house?"
+      }
+    }
+  ],
+  "target_feature_name": "price"
+}

@@ -1,0 +1,45 @@
+{
+  "features": [
+    {
+      "name": "name",
+      "type": {
+        "name": "text"
+      },
+      "attributes": {
+        "identifier": true
+      }
+    },
+    {
+      "name": "gender",
+      "type": {
+        "name": "categorical",
+        "classes": ["male", "female"],
+        "type": { "name": "multiclass" }
+      },
+      "metadata": {
+        "question": "What is your gender?"
+      }
+    },
+    {
+      "name": "age",
+      "type": {
+        "name": "numeric",
+        "type": { "name": "ratio" }
+      },
+      "metadata": {
+        "question": "How old are you?"
+      }
+    },
+    {
+      "name": "latitude",
+      "type": {
+        "name": "numeric",
+        "type": { "name": "interval" }
+      },
+      "metadata": {
+        "question": "What latitude do you live at?"
+      }
+    }
+  ],
+  "target_feature_name": "latitude"
+}
