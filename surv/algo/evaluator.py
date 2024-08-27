@@ -45,7 +45,7 @@ class Evaluator:
                 continue
             logger.debug("Computing information gain for feature: %s", feature.name)
             information_gain = self._compute_information_gain(dataset, feature, constraints)
-            logger.info("Information gain for feature %s: %f", feature.name, information_gain)
+            logger.info("Information gain - %s: %f", feature.name, information_gain)
             information_gain_map[feature.name] = information_gain
 
         max_information_gain = 0.0
