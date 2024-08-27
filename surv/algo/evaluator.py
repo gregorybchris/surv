@@ -79,13 +79,11 @@ class Evaluator:
         feature: Feature,
         constraints: list[Constraint],
     ) -> float:
+        column = dataset.get_column(feature.name)
         target_feature = dataset.get_feature(dataset.feature_info.target_feature_name)
         target_column = dataset.get_column(dataset.feature_info.target_feature_name)
-        entropy_initial = self._compute_entropy(target_column, target_feature.type)
 
-        information_gain = entropy_initial
-        current_column = dataset.get_column(feature.name)
-
+        # Apply constraints to the dataset.
         logger.debug("Initial dataset has %d samples.", dataset.n_samples)
         mask_column = np.ones(dataset.n_samples, dtype=bool)
         for constraint in constraints:
@@ -103,15 +101,17 @@ class Evaluator:
                     raise NotImplementedError(msg)
             logger.debug("Filtered dataset has %d samples.", np.sum(mask_column))
 
-        current_column = current_column[mask_column]
+        # Filter down dataset rows to only those that match the constraints.
+        column = column[mask_column]
         target_column = target_column[mask_column]
 
-        for category in np.unique(current_column):
-            target_subset = target_column[current_column == category]
+        entropy_initial = self._compute_entropy(target_column, target_feature.type)
+        information_gain = entropy_initial
+        for category in np.unique(column):
+            target_subset = target_column[column == category]
             subset_entropy = self._compute_entropy(target_subset, target_feature.type)
             proportion = target_subset.shape[0] / target_column.shape[0]
             information_gain -= proportion * subset_entropy
-
         return information_gain
 
     def _compute_entropy(self, column: np.ndarray, feature_type: FeatureType) -> float:
