@@ -30,9 +30,11 @@ def set_logger_config(info: bool, debug: bool) -> None:
 
 
 @main.command(name="run")
+@click.argument("dataset-name")
 @click.option("--info", is_flag=True)
 @click.option("--debug", is_flag=True)
 def run_command(
+    dataset_name: str,
     info: bool = False,
     debug: bool = False,
 ) -> None:
@@ -41,8 +43,9 @@ def run_command(
 
     settings = Settings()
 
-    tabular_filepath = settings.data_dirpath / "tabular.csv"
-    feature_info_filepath = settings.data_dirpath / "features.json"
+    dataset_dirpath = settings.data_dirpath / dataset_name
+    tabular_filepath = dataset_dirpath / "tabular.csv"
+    feature_info_filepath = dataset_dirpath / "features.json"
     dataset = Dataset.from_files(tabular_filepath, feature_info_filepath)
     logger.debug("Dataset: %s", dataset)
     logger.debug("Number of samples: %s", dataset.n_samples)
