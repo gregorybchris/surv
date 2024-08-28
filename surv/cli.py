@@ -108,12 +108,22 @@ def accept_input(feature: Feature) -> Constraint:
     match feature.type:
         case Categorical():
             categories = feature.type.classes
-            print(f"Question: {feature.metadata.question} {categories}")
+            print(f"Question: {feature.metadata.question}")
+            num_map = {str(i + 1): category for i, category in enumerate(categories)}
+            for n, category in num_map.items():
+                print(f"{n}: {category}")
+
             while True:
-                value = input()
-                if value in categories:
+                input_str = input()
+                if input_str in num_map:
+                    value = num_map[input_str]
                     break
-                print(f"Invalid input. Please select from {categories}")
+                if input_str in categories:
+                    value = input_str
+                    break
+                print(f"Invalid input. Please select a number between 1 and {len(num_map)}.")
+
+            assert value in categories
             return EqConstraint(feature=feature, value=value)
         case Numeric():
             raise NotImplementedError
