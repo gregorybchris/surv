@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import click
 from rich.logging import RichHandler
@@ -99,6 +100,17 @@ def print_survey_summary(constraints: list[Constraint], target_constraint: Const
             raise NotImplementedError
 
 
+def get_synonym_input(input_str: str, categories: list[str]) -> Optional[str]:
+    """Get the synonym input."""
+    synonyms = {
+        "y": "yes",
+        "n": "no",
+    }
+    if input_str in synonyms and synonyms[input_str] in categories:
+        return synonyms[input_str]
+    return None
+
+
 def accept_input(feature: Feature) -> Constraint:
     """Accept input from the user."""
     if feature.metadata is None:
@@ -114,12 +126,17 @@ def accept_input(feature: Feature) -> Constraint:
                 print(f"{n}: {category}")
 
             while True:
+                print("> ", end="")
                 input_str = input()
                 if input_str in num_map:
                     value = num_map[input_str]
                     break
                 if input_str in categories:
                     value = input_str
+                    break
+                synonym = get_synonym_input(input_str, categories)
+                if synonym is not None:
+                    value = synonym
                     break
                 print(f"Invalid input. Please select a number between 1 and {len(num_map)}.")
 
