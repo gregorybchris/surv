@@ -48,6 +48,7 @@ def run_command(
     tabular_filepath = dataset_dirpath / "tabular.csv"
     feature_info_filepath = dataset_dirpath / "features.json"
     dataset = Dataset.from_files(tabular_filepath, feature_info_filepath)
+    dataset.validate()
     logger.debug("Dataset: %s", dataset)
     logger.debug("Number of samples: %s", dataset.n_samples)
     logger.debug("Number of features: %s", dataset.n_features)

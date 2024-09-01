@@ -8,6 +8,7 @@ import pandas as pd
 from surv.models.feature import Feature
 from surv.models.feature_info import FeatureInfo
 from surv.models.feature_purpose import Training
+from surv.models.feature_types import Categorical
 
 
 @dataclass
@@ -77,3 +78,13 @@ class Dataset:
             if isinstance(feature.purpose, Training):
                 n += 1
         return n
+
+    def validate(self) -> None:
+        """Validate the dataset."""
+        for feature in self.feature_info.features:
+            if isinstance(feature.type, Categorical):
+                column = self.get_column(feature.name)
+                for value in column:
+                    if value not in feature.type.classes:
+                        msg = f"Value '{value}' not in classes for feature '{feature.name}'."
+                        raise ValueError(msg)
