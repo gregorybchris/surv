@@ -8,7 +8,7 @@ from surv.algo.constraints import Constraint, EqConstraint
 from surv.algo.evaluator import Evaluator
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
-from surv.models.feature_types import Categorical, Datetime, Numeric, Text
+from surv.models.feature_types import Categorical
 from surv.settings import Settings
 
 logger = logging.getLogger(__name__)
@@ -142,11 +142,7 @@ def accept_input(feature: Feature) -> Constraint:
 
             assert value in categories
             return EqConstraint(feature=feature, value=value)
-        case Numeric():
-            raise NotImplementedError
-        case Datetime():
-            raise NotImplementedError
-        case Text():
+        case _:
             raise NotImplementedError
 
 

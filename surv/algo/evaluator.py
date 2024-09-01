@@ -7,7 +7,7 @@ from surv.algo.constraints import Constraint, EqConstraint, GtConstraint, LtCons
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
 from surv.models.feature_purpose import Training
-from surv.models.feature_types import Categorical, Datetime, FeatureType, Numeric, Text
+from surv.models.feature_types import Categorical, FeatureType
 
 logger = logging.getLogger(__name__)
 
@@ -63,11 +63,7 @@ class Evaluator:
         match feature.type:
             case Categorical():
                 return self._compute_information_gain_categorical(dataset, feature, constraints)
-            case Numeric():
-                raise NotImplementedError
-            case Datetime():
-                raise NotImplementedError
-            case Text():
+            case _:
                 raise NotImplementedError
 
     def _compute_information_gain_categorical(
@@ -94,8 +90,7 @@ class Evaluator:
                 case GtConstraint(value=value):
                     mask_column &= constraint_column > value
                 case _:
-                    msg = f"Constraint type {type(constraint)} not implemented."
-                    raise NotImplementedError(msg)
+                    raise NotImplementedError
             logger.debug("Filtered dataset has %d samples.", np.sum(mask_column))
 
         # Filter down dataset rows to only those that match the constraints.
@@ -115,11 +110,7 @@ class Evaluator:
         match feature_type:
             case Categorical():
                 return self._compute_entropy_categorical(column)
-            case Numeric():
-                raise NotImplementedError
-            case Datetime():
-                raise NotImplementedError
-            case Text():
+            case _:
                 raise NotImplementedError
 
     @staticmethod
