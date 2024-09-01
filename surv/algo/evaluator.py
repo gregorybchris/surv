@@ -122,7 +122,8 @@ class Evaluator:
             case Text():
                 raise NotImplementedError
 
-    def _compute_entropy_categorical(self, column: np.ndarray) -> float:  # noqa: PLR6301
+    @staticmethod
+    def _compute_entropy_categorical(column: np.ndarray) -> float:
         h = 0.0
         for x in np.unique(column):
             p_x = np.sum(column == x) / column.shape[0]
