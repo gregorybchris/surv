@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from surv.algo.constraints import Constraint, EqConstraint, GtConstraint, LtConstraint
+from surv.algo.result import Continue, Result, Terminal, Unknown
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
 from surv.models.feature_purpose import Training
@@ -13,18 +14,10 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass
-class EvaluationResult:
-    """Evaluation result."""
-
-    feature: Feature
-    information_gain: float
-
-
-@dataclass
 class Evaluator:
     """Feature evaluator."""
 
-    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> EvaluationResult:
+    def evaluate(self, dataset: Dataset, constraints: list[Constraint]) -> Result:
         """Evaluate a dataset for the optimal feature data to collect.
 
         Args:
@@ -53,11 +46,17 @@ class Evaluator:
                 best_feature_name = feature_name
 
         if best_feature_name is None:
-            msg = "No best feature found."
-            raise ValueError(msg)
+            mask_column = self._filter_dataset(dataset, constraints)
+            target_column = dataset.get_column(dataset.feature_info.target_feature_name)
+            target_column = target_column[mask_column]
+            unique_targets = np.unique(target_column)
+            if unique_targets.shape[0] == 1:
+                category = unique_targets[0]
+                return Terminal(category=category)
+            return Unknown()
 
         best_feature = dataset.get_feature(best_feature_name)
-        return EvaluationResult(feature=best_feature, information_gain=max_information_gain)
+        return Continue(feature=best_feature, information_gain=max_information_gain)
 
     def _compute_information_gain(self, dataset: Dataset, feature: Feature, constraints: list[Constraint]) -> float:
         match feature.type:
@@ -66,17 +65,9 @@ class Evaluator:
             case _:
                 raise NotImplementedError
 
-    def _compute_information_gain_categorical(
-        self,
-        dataset: Dataset,
-        feature: Feature,
-        constraints: list[Constraint],
-    ) -> float:
-        column = dataset.get_column(feature.name)
-        target_feature = dataset.get_feature(dataset.feature_info.target_feature_name)
-        target_column = dataset.get_column(dataset.feature_info.target_feature_name)
-
-        # Apply constraints to the dataset.
+    @classmethod
+    def _filter_dataset(cls, dataset: Dataset, constraints: list[Constraint]) -> np.ndarray:
+        """Filter the dataset based on constraints."""
         logger.debug("Initial dataset has %d samples.", dataset.n_samples)
         mask_column = np.ones(dataset.n_samples, dtype=bool)
         for constraint in constraints:
@@ -92,6 +83,19 @@ class Evaluator:
                 case _:
                     raise NotImplementedError
             logger.debug("Filtered dataset has %d samples.", np.sum(mask_column))
+        return mask_column
+
+    def _compute_information_gain_categorical(
+        self,
+        dataset: Dataset,
+        feature: Feature,
+        constraints: list[Constraint],
+    ) -> float:
+        column = dataset.get_column(feature.name)
+        target_feature = dataset.get_feature(dataset.feature_info.target_feature_name)
+        target_column = dataset.get_column(dataset.feature_info.target_feature_name)
+
+        mask_column = self._filter_dataset(dataset, constraints)
 
         # Filter down dataset rows to only those that match the constraints.
         column = column[mask_column]

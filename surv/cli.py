@@ -6,6 +6,7 @@ from rich.logging import RichHandler
 
 from surv.algo.constraints import Constraint, EqConstraint
 from surv.algo.evaluator import Evaluator
+from surv.algo.result import Continue, Terminal, Unknown
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
 from surv.models.feature_types import Categorical
@@ -57,21 +58,25 @@ def run_command(
     constraints: list[Constraint] = []
     while len(constraints) < dataset.n_training_features:
         result = evaluator.evaluate(dataset, constraints)
-        feature = result.feature
-        information_gain = result.information_gain
+        match result:
+            case Terminal(category=category):
+                print(f"We think it's most likely your category is {category}")
+                break
+            case Unknown():
+                print("Dataset does not contain enough samples to make a decision")
+                break
+            case Continue(feature=feature, information_gain=information_gain):
+                feature = result.feature
+                information_gain = result.information_gain
 
-        logger.info("Found feature with highest information gain (%f): %s", information_gain, feature.name)
+                logger.info("Found feature with highest information gain (%f): %s", information_gain, feature.name)
 
-        if information_gain == 0.0:
-            logger.info("No information gain.")
-            break
+                if information_gain == settings.information_gain_threshold:
+                    logger.info("Information gain threshold reached.")
+                    break
 
-        if information_gain == settings.information_gain_threshold:
-            logger.info("Information gain threshold reached.")
-            break
-
-        constraint = accept_input(feature)
-        constraints.append(constraint)
+                constraint = accept_input(feature)
+                constraints.append(constraint)
 
     logger.info("Final constraints: %s", constraints)
 
