@@ -2,12 +2,8 @@
   "features": [
     {
       "name": "address",
-      "type": {
-        "name": "text"
-      },
-      "attributes": {
-        "identifier": true
-      }
+      "type": { "name": "text" },
+      "purpose": { "name": "identifier" }
     },
     {
       "name": "garage",
@@ -16,6 +12,7 @@
         "classes": ["yes", "no"],
         "type": { "name": "binary", "positive_class": "yes" }
       },
+      "purpose": { "name": "training" },
       "metadata": {
         "question": "does the house have a garage?"
       }
@@ -27,6 +24,7 @@
         "classes": ["no", "slightly", "very"],
         "type": { "name": "multiclass" }
       },
+      "purpose": { "name": "training" },
       "metadata": {
         "question": "is the house moldy?"
       }
@@ -38,6 +36,7 @@
         "classes": ["none", "small", "big"],
         "type": { "name": "multiclass" }
       },
+      "purpose": { "name": "training" },
       "metadata": {
         "question": "how big is the house's yard?"
       }
@@ -49,6 +48,7 @@
         "classes": ["cheap", "expensive"],
         "type": { "name": "multiclass" }
       },
+      "purpose": { "name": "target" },
       "metadata": {
         "question": "what's the price of the house?"
       }

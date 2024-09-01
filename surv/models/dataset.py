@@ -7,6 +7,7 @@ import pandas as pd
 
 from surv.models.feature import Feature
 from surv.models.feature_info import FeatureInfo
+from surv.models.feature_purpose import Training
 
 
 @dataclass
@@ -73,9 +74,6 @@ class Dataset:
         """Number of training features in the dataset."""
         n = 0
         for feature in self.feature_info.features:
-            if feature.name == self.feature_info.target_feature_name:
-                continue
-            if feature.attributes.identifier:
-                continue
-            n += 1
+            if isinstance(feature.purpose, Training):
+                n += 1
         return n

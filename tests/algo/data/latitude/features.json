@@ -2,12 +2,8 @@
   "features": [
     {
       "name": "name",
-      "type": {
-        "name": "text"
-      },
-      "attributes": {
-        "identifier": true
-      }
+      "type": { "name": "text" },
+      "purpose": { "name": "identifier" }
     },
     {
       "name": "gender",
@@ -16,6 +12,7 @@
         "classes": ["male", "female"],
         "type": { "name": "multiclass" }
       },
+      "purpose": { "name": "training" },
       "metadata": {
         "question": "What is your gender?"
       }
@@ -26,6 +23,7 @@
         "name": "numeric",
         "type": { "name": "ratio" }
       },
+      "purpose": { "name": "training" },
       "metadata": {
         "question": "How old are you?"
       }
@@ -36,6 +34,7 @@
         "name": "numeric",
         "type": { "name": "interval" }
       },
+      "purpose": { "name": "target" },
       "metadata": {
         "question": "What latitude do you live at?"
       }

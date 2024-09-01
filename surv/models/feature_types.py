@@ -25,7 +25,7 @@ class Multiclass(BaseModel):
     name: Literal["multiclass"]
 
 
-CategoricalFeatureTypes = Union[Binary, Multiclass]
+CategoricalFeatureType = Union[Binary, Multiclass]
 
 
 class Categorical(BaseModel):
@@ -33,12 +33,12 @@ class Categorical(BaseModel):
 
     Attributes:
         name (Literal["categorical"]): Feature type discriminator field.
-        type (Union[Binary, Multiclass]): Categorical variable subtype.
+        type (CategoricalFeatureType): Categorical variable subtype.
         classes (Optional[str]): List of classes.
     """
 
     name: Literal["categorical"]
-    type: CategoricalFeatureTypes = Field(..., discriminator="name")
+    type: CategoricalFeatureType = Field(..., discriminator="name")
     classes: list[str]
 
 
@@ -72,7 +72,7 @@ class Ratio(BaseModel):
     name: Literal["ratio"]
 
 
-NumericFeatureTypes = Union[Ordinal, Interval, Ratio]
+NumericFeatureType = Union[Ordinal, Interval, Ratio]
 
 
 class Numeric(BaseModel):
@@ -80,11 +80,11 @@ class Numeric(BaseModel):
 
     Attributes:
         name (Literal["numeric"]): Feature type discriminator field.
-        type (Union[Ordinal, Interval, Ratio]): Numeric variable subtype.
+        type (NumericFeatureType): Numeric variable subtype.
     """
 
     name: Literal["numeric"]
-    type: NumericFeatureTypes = Field(..., discriminator="name")
+    type: NumericFeatureType = Field(..., discriminator="name")
 
 
 class Datetime(BaseModel):

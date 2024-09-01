@@ -6,6 +6,7 @@ import numpy as np
 from surv.algo.constraints import Constraint, EqConstraint, GtConstraint, LtConstraint
 from surv.models.dataset import Dataset
 from surv.models.feature import Feature
+from surv.models.feature_purpose import Training
 from surv.models.feature_types import Categorical, Datetime, FeatureType, Numeric, Text
 
 logger = logging.getLogger(__name__)
@@ -33,15 +34,11 @@ class Evaluator:
         logger.info("-----")
         logger.info("Evaluating dataset with %i constraints.", len(constraints))
         feature_info = dataset.feature_info
-        target_feature_name = dataset.feature_info.target_feature_name
 
         information_gain_map: dict[str, float] = {}
         for feature in feature_info.features:
-            if feature.name == target_feature_name:
-                logger.debug("Skipping target feature %s", feature.name)
-                continue
-            if feature.attributes.identifier:
-                logger.debug("Skipping identifier feature %s", feature.name)
+            if not isinstance(feature.purpose, Training):
+                logger.debug("Skipping non-training feature %s with purpose %s", feature.name, feature.purpose.name)
                 continue
             logger.debug("Computing information gain for feature: %s", feature.name)
             information_gain = self._compute_information_gain(dataset, feature, constraints)
