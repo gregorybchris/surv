@@ -40,6 +40,7 @@ class Categorical(BaseModel):
     name: Literal["categorical"]
     type: CategoricalFeatureType = Field(..., discriminator="name")
     categories: list[str]
+    numeric_alias: bool = False
 
 
 class Ordinal(BaseModel):

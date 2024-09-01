@@ -32,7 +32,32 @@ class Dataset:
             feature_info_json = json.load(file)
             feature_info = FeatureInfo(**feature_info_json)
 
+        tabular = cls.apply_aliases(feature_info, tabular)
+
         return cls(tabular, feature_info)
+
+    @classmethod
+    def apply_aliases(cls, feature_info: FeatureInfo, tabular: pd.DataFrame) -> pd.DataFrame:
+        """Apply categorical numeric aliases to the tabular dataset.
+
+        Args:
+            feature_info (FeatureInfo): Feature metadata.
+            tabular (pd.DataFrame): Tabular dataset.
+
+        Returns:
+            pd.DataFrame: Tabular dataset with aliased columns.
+        """
+        tabular = tabular.copy()
+        for feature in feature_info.features:
+            if isinstance(feature.type, Categorical) and feature.type.numeric_alias:
+                column = tabular[feature.name]
+                categories = feature.type.categories
+                for x in column:
+                    if x < 1 or x > len(categories):
+                        msg = f"Value '{x}' not in categories for feature '{feature.name}'."
+                        raise ValueError(msg)
+                tabular[feature.name] = column.apply(lambda x, categories=categories: categories[x - 1])
+        return tabular
 
     def get_column(self, feature_name: str) -> np.ndarray:
         """Get a column from the dataset.
@@ -81,6 +106,10 @@ class Dataset:
 
     def validate(self) -> None:
         """Validate the dataset."""
+        if set(self.tabular.columns) != {feature.name for feature in self.feature_info.features}:
+            msg = "Feature names in the dataset do not match feature metadata."
+            raise ValueError(msg)
+
         for feature in self.feature_info.features:
             if isinstance(feature.type, Categorical):
                 column = self.get_column(feature.name)
