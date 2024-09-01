@@ -27,7 +27,11 @@ def evaluation_dataset(request: pytest.FixtureRequest) -> EvaluationDataset:
     feature_info_filepath = data_dirpath / "features.json"
     tabular_filepath = data_dirpath / "tabular.csv"
     dataset = Dataset.from_files(tabular_filepath, feature_info_filepath)
+
+    dataset.validate()
+
     tags_filepath = data_dirpath / "tags.json"
     with tags_filepath.open("r") as file:
         tags = json.load(file)
+
     return EvaluationDataset(dataset, tags)
