@@ -4,7 +4,7 @@ from enum import StrEnum
 from pathlib import Path
 
 import pytest
-from surv.models.dataset import Dataset
+from surv.dataset.dataset import Dataset
 
 
 class DatasetTag(StrEnum):

@@ -5,10 +5,10 @@ import numpy as np
 
 from surv.algo.constraints import Constraint, EqConstraint, GtConstraint, LtConstraint
 from surv.algo.result import Continue, Result, Terminal, Unknown
-from surv.models.dataset import Dataset
-from surv.models.feature import Feature
-from surv.models.feature_purpose import Training
-from surv.models.feature_types import Categorical, FeatureType
+from surv.dataset.dataset import Dataset
+from surv.dataset.feature import Feature
+from surv.dataset.feature_purpose import Training
+from surv.dataset.feature_types import Categorical, FeatureType
 
 logger = logging.getLogger(__name__)
 

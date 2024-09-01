@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from surv.models.feature import Feature
+from surv.dataset.feature import Feature
 
 
 class Constraint(BaseModel):

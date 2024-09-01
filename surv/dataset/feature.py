@@ -2,9 +2,9 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from surv.models.feature_metadata import FeatureMetadata
-from surv.models.feature_purpose import FeaturePurpose
-from surv.models.feature_types import FeatureType
+from surv.dataset.feature_metadata import FeatureMetadata
+from surv.dataset.feature_purpose import FeaturePurpose
+from surv.dataset.feature_types import FeatureType
 
 
 class Feature(BaseModel):

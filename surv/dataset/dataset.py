@@ -5,10 +5,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from surv.models.feature import Feature
-from surv.models.feature_info import FeatureInfo
-from surv.models.feature_purpose import Training
-from surv.models.feature_types import Categorical
+from surv.dataset.feature import Feature
+from surv.dataset.feature_info import FeatureInfo
+from surv.dataset.feature_purpose import Training
+from surv.dataset.feature_types import Categorical
 
 
 @dataclass
