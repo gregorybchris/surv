@@ -34,12 +34,12 @@ class Categorical(BaseModel):
     Attributes:
         name (Literal["categorical"]): Feature type discriminator field.
         type (CategoricalFeatureType): Categorical variable subtype.
-        classes (Optional[str]): List of classes.
+        categories (Optional[str]): List of categories.
     """
 
     name: Literal["categorical"]
     type: CategoricalFeatureType = Field(..., discriminator="name")
-    classes: list[str]
+    categories: list[str]
 
 
 class Ordinal(BaseModel):

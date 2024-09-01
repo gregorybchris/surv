@@ -85,6 +85,6 @@ class Dataset:
             if isinstance(feature.type, Categorical):
                 column = self.get_column(feature.name)
                 for value in column:
-                    if value not in feature.type.classes:
-                        msg = f"Value '{value}' not in classes for feature '{feature.name}'."
+                    if value not in feature.type.categories:
+                        msg = f"Value '{value}' not in categories for feature '{feature.name}'."
                         raise ValueError(msg)

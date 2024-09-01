@@ -9,7 +9,7 @@
       "name": "garage",
       "type": {
         "name": "categorical",
-        "classes": ["yes", "no"],
+        "categories": ["yes", "no"],
         "type": { "name": "binary", "positive_class": "yes" }
       },
       "purpose": { "name": "training" },
@@ -21,7 +21,7 @@
       "name": "moldy",
       "type": {
         "name": "categorical",
-        "classes": ["no", "slightly", "very"],
+        "categories": ["no", "slightly", "very"],
         "type": { "name": "multiclass" }
       },
       "purpose": { "name": "training" },
@@ -33,7 +33,7 @@
       "name": "yard_size",
       "type": {
         "name": "categorical",
-        "classes": ["none", "small", "big"],
+        "categories": ["none", "small", "big"],
         "type": { "name": "multiclass" }
       },
       "purpose": { "name": "training" },
@@ -45,7 +45,7 @@
       "name": "price",
       "type": {
         "name": "categorical",
-        "classes": ["cheap", "expensive"],
+        "categories": ["cheap", "expensive"],
         "type": { "name": "multiclass" }
       },
       "purpose": { "name": "target" },

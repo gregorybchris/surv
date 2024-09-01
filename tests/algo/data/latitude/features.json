@@ -9,7 +9,7 @@
       "name": "gender",
       "type": {
         "name": "categorical",
-        "classes": ["male", "female"],
+        "categories": ["male", "female"],
         "type": { "name": "multiclass" }
       },
       "purpose": { "name": "training" },

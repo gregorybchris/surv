@@ -120,7 +120,7 @@ def accept_input(feature: Feature) -> Constraint:
 
     match feature.type:
         case Categorical():
-            categories = feature.type.classes
+            categories = feature.type.categories
             print(f"Question: {feature.metadata.question}")
             num_map = {str(i + 1): category for i, category in enumerate(categories)}
             for n, category in num_map.items():
