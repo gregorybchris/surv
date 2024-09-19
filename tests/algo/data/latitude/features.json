@@ -2,17 +2,25 @@
   "features": [
     {
       "name": "name",
-      "type": { "name": "text" },
-      "purpose": { "name": "identifier" }
+      "type": {
+        "name": "text"
+      },
+      "purpose": {
+        "name": "identifier"
+      }
     },
     {
       "name": "gender",
       "type": {
         "name": "categorical",
         "categories": ["male", "female"],
-        "type": { "name": "multiclass" }
+        "type": {
+          "name": "multiclass"
+        }
       },
-      "purpose": { "name": "training" },
+      "purpose": {
+        "name": "training"
+      },
       "metadata": {
         "question": "What is your gender?"
       }
@@ -21,9 +29,13 @@
       "name": "age",
       "type": {
         "name": "numeric",
-        "type": { "name": "ratio" }
+        "type": {
+          "name": "ratio"
+        }
       },
-      "purpose": { "name": "training" },
+      "purpose": {
+        "name": "training"
+      },
       "metadata": {
         "question": "How old are you?"
       }
@@ -32,9 +44,13 @@
       "name": "latitude",
       "type": {
         "name": "numeric",
-        "type": { "name": "interval" }
+        "type": {
+          "name": "interval"
+        }
       },
-      "purpose": { "name": "target" },
+      "purpose": {
+        "name": "target"
+      },
       "metadata": {
         "question": "What latitude do you live at?"
       }
