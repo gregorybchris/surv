@@ -28,7 +28,7 @@ This command will start up an interactive session where you can fill out a surve
 
 ```bash
 export SURV_DATA_DIRPATH="<data-dirpath>"
-poetry run surv run <dataset-name>
+poetry run surv run <dataset-name> --info
 ```
 
 ### Example
@@ -36,8 +36,8 @@ poetry run surv run <dataset-name>
 The housing market example is loosely based on the [Boston housing dataset](https://scikit-learn.org/0.16/modules/generated/sklearn.datasets.load_boston.html). By filling out information about a hypothetical house (like the yard size, garage status, and presence of mold) Surv will decrease its uncertainty about the value of the house.
 
 ```bash
-export SURV_DATA_DIRPATH="tests/algo/data"
-poetry run surv run house
+export SURV_DATA_DIRPATH="<path-to>/surv/tests/algo/data"
+poetry run surv run house --info
 ```
 
 ## Dataset representation

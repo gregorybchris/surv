@@ -60,7 +60,7 @@ def run_command(
         result = evaluator.evaluate(dataset, constraints)
         match result:
             case Terminal(category=category):
-                print(f"We think it's most likely your category is {category}")
+                print(f"It's most likely your category is {category}")
                 break
             case Unknown():
                 print("Dataset does not contain enough samples to make a decision")
