@@ -2,7 +2,7 @@
   <h1>Surv</h1>
 
   <p>
-    <strong>Dynamic survey generator</strong>
+    <strong>Adaptive survey engine</strong>
   </p>
 
   <hr />
