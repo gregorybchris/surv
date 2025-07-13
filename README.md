@@ -10,7 +10,7 @@
 
 ## About
 
-Nobody likes to fill out long surveys, especially ones with obviously redundant questions. Surv is designed to keep the participant engaged by minimizing the number of questions while maximizing the information gained from each question.
+Nobody likes to fill out long surveys, especially ones with obviously redundant questions. Surv is designed to keep participants engaged by minimizing the number of questions while maximizing the information gained from each question.
 
 Survey length is especially important when the participant has a choice in whether to complete the survey. When filling out a medical intake form you may have no choice but to answer 100 questions, but for use cases like market research, usability studies, job satisfaction, or political polls, the length and precision of the survey can significantly affect the probability of survey completion. As we know, a low probability of completion can lead to a biased sample.
 
