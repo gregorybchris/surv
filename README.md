@@ -10,9 +10,13 @@
 
 ## About
 
-Based on your answers to survey questions, Surv will select the next question that maximizes expected information gain. This means that in most cases you don't need to fill out every question in the survey before your result is known to a high degree of confidence.
+Nobody likes to fill out long surveys, especially those with questions that are obviously redundant. Surv is designed to keep the participant engaged by minimizing the number of questions while maximizing the information gained from each question.
 
-You must have a feature you are trying to predict to use Surv. You need something information gain can be relative to. You can use Surv to collect a dataset, but if you don't have a seed dataset already collected, then each participant will need to take the survey in full.
+Survey length is especially important when the participant has a choice in whether to complete the survey. When filling out a medical intake form you may have no choice but to answer 100 questions, but for use cases like market research, usability studies, job satisfaction, or political polls, the length and precision of the survey can significantly affect the probability of survey completion. As we know, a low probability of completion can lead to a biased sample.
+
+As you answer questions on a Surv survey, the expected information gain is recalculated, determining which question to present next. In most cases you don't need to fill out every question in the survey before results are known to a high degree of confidence.
+
+The paradox of the adaptive survey is that while each participant spends less time taking the survey, you are able to include more total questions in the survey, including questions that do not apply to a large portion of the population, but are highly informative for some individuals.
 
 ## Installation
 
