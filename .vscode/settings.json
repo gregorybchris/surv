@@ -13,7 +13,10 @@
   "editor.rulers": [120],
   "mypy-type-checker.args": ["--config-file", "pyproject.toml"],
   "prettier.printWidth": 120,
-  "ruff.format.args": ["--config", "pyproject.toml"],
+  "ruff.configuration": "pyproject.toml",
   "ruff.nativeServer": true,
-  "cSpell.words": ["autouse", "Multiclass"]
+  "cSpell.words": [],
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
 }

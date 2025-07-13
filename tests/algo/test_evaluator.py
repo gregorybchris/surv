@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
 import pytest
-from surv.algo.evaluator import Evaluator
 
+from surv.algo.evaluator import Evaluator
 from tests.algo.conftest import DatasetTag, EvaluationDataset
 
 if TYPE_CHECKING:

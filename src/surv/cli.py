@@ -1,8 +1,8 @@
 import logging
-from typing import Optional
+from typing import Annotated, Optional
 
-import click
 from rich.logging import RichHandler
+from typer import Argument, Option, Typer
 
 from surv.algo.constraints import Constraint, EqConstraint
 from surv.algo.evaluator import Evaluator
@@ -14,10 +14,7 @@ from surv.settings import Settings
 
 logger = logging.getLogger(__name__)
 
-
-@click.group()
-def main() -> None:
-    """Run main CLI entrypoint."""
+app = Typer(pretty_exceptions_enable=False)
 
 
 def set_logger_config(info: bool, debug: bool) -> None:
@@ -31,14 +28,17 @@ def set_logger_config(info: bool, debug: bool) -> None:
         logging.basicConfig(level=logging.DEBUG, handlers=handlers, format=log_format)
 
 
-@main.command(name="run")
-@click.argument("dataset-name")
-@click.option("--info", is_flag=True)
-@click.option("--debug", is_flag=True)
-def run_command(
-    dataset_name: str,
-    info: bool = False,
-    debug: bool = False,
+@app.command()
+def noop() -> None:
+    """A no-op command to force a command name."""
+
+
+@app.command()
+def run(
+    *,
+    dataset_name: Annotated[str, Argument()],
+    info: Annotated[bool, Option("--info/--no-info")] = False,
+    debug: Annotated[bool, Option("--debug/--no-debug")] = False,
 ) -> None:
     """Run the CLI."""
     set_logger_config(info, debug)
@@ -150,7 +150,3 @@ def accept_input(feature: Feature) -> Constraint:
             return EqConstraint(feature=feature, value=value)
         case _:
             raise NotImplementedError
-
-
-if __name__ == "__main__":
-    main()

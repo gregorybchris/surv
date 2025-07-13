@@ -4,6 +4,7 @@ from enum import StrEnum
 from pathlib import Path
 
 import pytest
+
 from surv.dataset.dataset import Dataset
 
 

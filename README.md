@@ -20,10 +20,10 @@ The paradox of the adaptive survey is that while each participant spends less ti
 
 ## Installation
 
-[Poetry](https://python-poetry.org/) is a requirement
+Install using [uv](https://docs.astral.sh/uv)
 
 ```bash
-poetry install
+uv sync
 ```
 
 ## CLI usage
@@ -32,7 +32,7 @@ This command will start up an interactive session where you can fill out a surve
 
 ```bash
 export SURV_DATA_DIRPATH="<data-dirpath>"
-poetry run surv run <dataset-name> --info
+uv run surv run <dataset-name> --info
 ```
 
 ### Example
@@ -41,7 +41,7 @@ The housing market example is loosely based on the [Boston housing dataset](http
 
 ```bash
 export SURV_DATA_DIRPATH="<path-to>/surv/tests/algo/data"
-poetry run surv run house --info
+uv run surv run house --info
 ```
 
 ## Dataset representation

@@ -54,7 +54,7 @@ class Evaluator:
                 category = unique_targets[0]
                 logger.info("Terminal node reached with category: %s", category)
                 return Terminal(category=category)
-            logger.info(f"Unknown node reached with targets: {unique_targets}")
+            logger.info("Unknown node reached with targets: %s", unique_targets)
             return Unknown()
 
         best_feature = dataset.get_feature(best_feature_name)
