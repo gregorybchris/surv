@@ -52,32 +52,30 @@ Surv also comes with a dataset feature metadata system. Feature types and featur
 
 Track metadata like the cardinality of categorical features, whether features are continuous or discrete, and whether values should be treated like integers or floating point numbers.
 
-| Feature Type | Feature Subtype |
-| ------------ | --------------- |
-| Categorical  | Binary          |
-| Categorical  | Multiclass      |
-| Numeric      | Ordinal         |
-| Numeric      | Interval        |
-| Numeric      | Ratio           |
-| Datetime     | -               |
-| Text         | -               |
+| Feature Type | Feature Subtype | Description                                                                                      |
+| ------------ | --------------- | ------------------------------------------------------------------------------------------------ |
+| Categorical  | Binary          | Two possible values, e.g. yes/no, true/false                                                     |
+| Categorical  | Multiclass      | More than two possible values, e.g. red/green/blue                                               |
+| Numeric      | Ordinal         | Values have a meaningful order, e.g. low/medium/high                                             |
+| Numeric      | Interval        | Values have a meaningful order and equal intervals, e.g. temperature in Celsius                  |
+| Numeric      | Ratio           | Values have a meaningful order, equal intervals, and a true zero point, e.g. weight in kilograms |
+| Datetime     | -               | Date and time values                                                                             |
+| Text         | -               | Free-form text, e.g. comments or descriptions                                                    |
 
 ### Feature purposes
 
 Tagging the purpose of features can help you filter down features for certain use cases like training or identifying a unique sample across multiple datasets.
 
-| Feature Purpose |
-| --------------- |
-| Training        |
-| Identifier      |
-| Target          |
-| Metadata        |
-| SampleWeight    |
-| Evaluation      |
-| Stratification  |
-| SubjectWise     |
-| Grouping        |
-| Sensitive       |
+| Feature Purpose | Description                                                                                                        |
+| --------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Training        | Features used as inputs during training                                                                            |
+| Target          | Features that a model is trained to predict, e.g. house price or customer satisfaction                             |
+| Identifier      | Features that uniquely identify a sample, e.g. user ID or survey response ID                                       |
+| Metadata        | Arbitrary metadata features                                                                                        |
+| SampleWeight    | Features that weight samples by importance for either training or evaluation                                       |
+| Stratification  | Features used to ensure even splits of data across different groups                                                |
+| SubjectWise     | Features that group data by subject to ensure within subject samples are not used for both training and validation |
+| Sensitive       | Features that should not be used for training, but may be used for evaluation to ensure fairness or evaluate bias  |
 
 ## Running tests
 
